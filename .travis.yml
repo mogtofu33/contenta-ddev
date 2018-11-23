@@ -6,17 +6,8 @@ language: minimal
 services:
   - docker
 
-env:
-  - DDEV_VERSION=v1.4.1
-
 before_install:
   - docker --version
   - docker-compose --version
-
-install:
-  - curl -fSL "https://github.com/drud/ddev/releases/download/$DDEV_VERSION/ddev_docker_images.$DDEV_VERSION.tar.gz" -o ddev.tar.gz
-  - tar -xzf ddev.tar.gz
-  - chmod ugo+x ddev
-  - sudo mv ddev /usr/local/bin
 
 script: ./install.sh

@@ -30,7 +30,7 @@ fi
 
 if ! [ -x "$(command -v ddev)" ]; then
   printf "[info] Install ddev\\n"
-  curl -L https://raw.githubusercontent.com/drud/ddev/master/install_ddev.sh | bash
+  sudo curl -L https://raw.githubusercontent.com/drud/ddev/master/install_ddev.sh | bash
 else
   printf "[info] ddev already installed\\n"
 fi
