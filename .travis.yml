@@ -1,11 +1,13 @@
 dist: xenial
 sudo: required
 
+language: minimal
+
 env:
-  - LATEST_VERSION=v1.4.1
+  - DDEV_VERSION=v1.4.1
 
 before_install:
-  - sudo curl -fSL "https://github.com/drud/ddev/releases/download/$LATEST_VERSION/ddev_docker_images.$LATEST_VERSION.tar.gz" -o ddev.tar.gz
+  - sudo curl -fSL "https://github.com/drud/ddev/releases/download/$DDEV_VERSION/ddev_docker_images.$DDEV_VERSION.tar.gz" -o ddev.tar.gz
   - sudo tar -xzf ddev.tar.gz -C /tmp/ && sudo chmod ugo+x /tmp/ddev
   - sudo mv /tmp/ddev /usr/local/bin/
 
