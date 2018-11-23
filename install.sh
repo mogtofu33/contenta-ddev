@@ -1,4 +1,5 @@
 #!/bin/bash
+set -ev
 
 if [ "${1:-}" == "nuke" ]; then
   __who=${2:-"all"}

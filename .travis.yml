@@ -18,5 +18,4 @@ install:
   - tar -xzf ddev.tar.gz -C /tmp/ && chmod ugo+x /tmp/ddev
   - sudo mv /tmp/ddev /usr/local/bin
 
-script:
-  - bash install.sh
+script: ./install.sh
