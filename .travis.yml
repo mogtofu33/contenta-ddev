@@ -15,7 +15,8 @@ before_install:
 
 install:
   - curl -fSL "https://github.com/drud/ddev/releases/download/$DDEV_VERSION/ddev_docker_images.$DDEV_VERSION.tar.gz" -o ddev.tar.gz
-  - tar -xzf ddev.tar.gz -C /tmp/ && chmod ugo+x /tmp/ddev
+  - tar -xvzf ddev.tar.gz -C /tmp/
+  - chmod ugo+x /tmp/ddev
   - sudo mv /tmp/ddev /usr/local/bin
 
 script: ./install.sh
