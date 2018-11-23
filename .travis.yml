@@ -8,7 +8,6 @@ services:
 
 before_install:
   - shellcheck install.sh
+  - docker --version
 
-script:
-  - ./install.sh
-  - test/tests.sh
+script: ./install.sh && ./test/test.sh
