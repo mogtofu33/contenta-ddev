@@ -9,4 +9,7 @@ services:
 before_install:
   - shellcheck install.sh
 
-script: ./install.sh
+install:
+  - ./install.sh
+
+script: ./test/tests.sh
