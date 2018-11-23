@@ -3,15 +3,15 @@ set -ev
 
 if [ "${1:-}" == "nuke" ]; then
   __who=${2:-"all"}
-  if [ $__who == "all" ]; then
+  if [ "$__who" == "all" ]; then
     ddev rm
     rm -rf .ddev contenta_vue_nuxt contentacms contentajs
   else
-    if [ -d $__who ] ; then
+    if [ -d "$__who" ] ; then
       ddev rm
-      rm -rf .ddev $__who
+      rm -rf .ddev "$__who"
     else
-      printf "[Error] Unknown folder %s\\n" $__who
+      printf "[Error] Unknown folder %s\\n" "$__who"
       exit 1
     fi
   fi
@@ -106,7 +106,7 @@ cp ddev-files/docker-compose.vue_nuxt.yaml.dis .ddev/docker-compose.vue_nuxt.yam
 # Detect if we have a local composer to speed up a bit.
 if [ -x "$(command -v composer)" ]; then
   __cache=$(composer global config cache-dir)
-  if [ ${__cache} ]; then
+  if [ "${__cache}" ]; then
     sed -i 's/#volumes/volumes/g' .ddev/docker-compose.override.yaml
     sed -i 's/#-/-/g' .ddev/docker-compose.override.yaml
     sed -i "s#YOUR_COMPOSER_CACHE_DIR#$__cache#g" .ddev/docker-compose.override.yaml
