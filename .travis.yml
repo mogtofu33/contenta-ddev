@@ -11,4 +11,4 @@ before_install:
 
 script:
   - ./install.sh
-  - tests/test.sh
+  - test/tests.sh
