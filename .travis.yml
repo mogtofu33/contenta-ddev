@@ -8,6 +8,7 @@ services:
 
 before_install:
   - shellcheck install.sh
+  - chmod +x test/tests.sh
 
 install:
   - ./install.sh

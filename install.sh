@@ -91,7 +91,7 @@ if ! [ -d "./contentacms/web/sites/default" ]; then
   mkdir -p ./contentacms/web/sites/default
 fi
 
-ddev config --projecttype drupal8 --projectname contenta --docroot contentacms/web \
+ddev config --project-type drupal8 --project-name contenta --docroot contentacms/web \
   --additional-hostnames front-vue
 
 if ! [ -d "./.ddev" ]; then
@@ -113,7 +113,12 @@ if [ -x "$(command -v composer)" ]; then
   fi
 fi
 
+# Fix pm2 npm permission error.
+sudo chmod -R 777 contentajs
+
 ddev start
+
+ddev logs -s pm2
 
 if ! [ -d "contentacms/web/core" ] ; then
   printf "[info] Download ContentaCMS with Composer from ddev\\n"
@@ -135,11 +140,12 @@ fi
 if ! [ -d "contentacms/keys" ] ; then
   printf "[info] Install ContentaCMS\\n"
   # Ensure settings and permissions.
-  ddev config --projecttype drupal8 --projectname contenta --docroot contentacms/web \
+  ddev config --project-type drupal8 --project-name contenta --docroot contentacms/web \
     --additional-hostnames front-vue
 
   # @TODO: https://www.drupal.org/project/jsonapi_extras/issues/3013544
   # Downgrading to jsonapi_extras 2.10
+  printf "[HOTFIX] Downgrading to jsonapi_extras 2.10\\n"
   ddev exec composer require --prefer-dist --working-dir=/var/www/html/contentacms drupal/jsonapi_extras:2.10
 
   # Install with drush, db info are in settings.ddev.php created by config line above.
@@ -156,20 +162,21 @@ else
   printf "[warning] Missing ContentaCMS services.yml file\\n"
 fi
 
-sleep 20s
-
 ddev exec drush status
-ddev logs -s pm2
-
-sleep 20s
 
 # Ensure PM2 is fully installed before restart, npm install can be long.
-# while [ ! -f 'contentajs/pm2.pid' ]
-# do
-#   printf "[info] Waiting for ContentaJS to be installed...\\n"
-#   sleep 10s
-#   printf "...If this get stuck, stop and re-run install.sh\\n"
-# done
+while [ ! -f 'contentajs/pm2.pid' ]
+do
+  printf "[info] Waiting for ContentaJS to be installed...\\n"
+  sleep 30s
+  printf "...If this get stuck, stop and re-run install.sh\\n"
+  ddev logs -s pm2
+  ddev stop pm2
+  ddev remove pm2
+  ddev start pm2
+  sleep 30s
+  ddev logs -s pm2
+done
 
 # Avoid install on restart for npm.
 sed -i 's/command: sh -c/#command: sh -c/g' .ddev/docker-compose.pm2.yaml
