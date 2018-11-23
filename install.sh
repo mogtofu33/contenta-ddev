@@ -156,13 +156,20 @@ else
   printf "[warning] Missing ContentaCMS services.yml file\\n"
 fi
 
+sleep 20s
+
+ddev exec drush status
+ddev logs -s pm2
+
+sleep 20s
+
 # Ensure PM2 is fully installed before restart, npm install can be long.
-while [ ! -f 'contentajs/pm2.pid' ]
-do
-  printf "[info] Waiting for ContentaJS to be installed...\\n"
-  sleep 10s
-  printf "...If this get stuck, stop and re-run install.sh\\n"
-done
+# while [ ! -f 'contentajs/pm2.pid' ]
+# do
+#   printf "[info] Waiting for ContentaJS to be installed...\\n"
+#   sleep 10s
+#   printf "...If this get stuck, stop and re-run install.sh\\n"
+# done
 
 # Avoid install on restart for npm.
 sed -i 's/command: sh -c/#command: sh -c/g' .ddev/docker-compose.pm2.yaml

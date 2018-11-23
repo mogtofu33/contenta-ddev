@@ -8,6 +8,10 @@ services:
 
 before_install:
   - docker --version
-  - docker-compose --version
 
-script: ./install.sh
+install:
+  - ./install.sh
+
+script:
+  - shellcheck install.sh
+  - tests/test.sh
