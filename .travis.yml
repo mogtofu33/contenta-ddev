@@ -1,16 +1,23 @@
 dist: xenial
 sudo: required
 
-language: minimal
+language: generic
 
 services:
   - docker
 
-before_install:
-  - shellcheck install.sh
-  - chmod +x test/tests.sh
+stages:
+  - lint
+  - test
 
-install:
-  - ./install.sh
+jobs:
+  include:
+    - stage: lint
+      script: shellcheck install.sh
 
-script: ./test/tests.sh
+    - stage: test
+      install:
+        - ./install.sh
+      before_script: chmod +x tests/run-tests.sh
+      script:
+        - ./tests/run-tests.sh
