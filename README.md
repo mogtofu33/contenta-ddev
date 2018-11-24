@@ -1,5 +1,7 @@
 # ContentaCMS - ContentaJs with Docker managed by ddev
 
+[![Build Status](https://travis-ci.com/Mogtofu33/contenta-ddev.svg?branch=master)](https://travis-ci.com/Mogtofu33/contenta-ddev)
+
 This project is a basic Drupal [ContentaCMS](https://www.contentacms.org/) / [ContentaJS](https://github.com/contentacms/contentajs#readme) environment stack with [ddev](https://github.com/drud/ddev).
 
 - [System Requirements](#system-requirements)
