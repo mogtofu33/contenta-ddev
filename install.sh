@@ -113,8 +113,11 @@ if [ -x "$(command -v composer)" ]; then
   fi
 fi
 
-# Fix pm2 npm permission error.
-sudo chmod -R 777 contentajs
+if [ "${1:-}" == "ci" ]; then
+  # Fix npm permission error on ci.
+  sudo chmod -R 777 contentajs
+  sudo chmod -R 777 contenta_vue_nuxt
+fi
 
 # First start of the stack.
 ddev start
